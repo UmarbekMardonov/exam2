@@ -16,7 +16,18 @@ class CityDetail(serializers.ModelSerializer):
         fields = ('id', 'title',)
 
 
+class StreetSerializer(serializers.ModelSerializer):
+    city = CitySerializer()
+
+    class Meta:
+        model = Street
+        fields = "__all__"
+
+
 class ShopSerializer(serializers.ModelSerializer):
+    city = CitySerializer()
+    street = StreetSerializer()
+
     class Meta:
         model = Shop
-        fields = "__all__"
+        fields = ("title", "city", "street")

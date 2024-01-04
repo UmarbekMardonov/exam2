@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 
 class City(models.Model):
@@ -18,11 +19,12 @@ class Street(models.Model):
 
 class Shop(models.Model):
     title = models.CharField(max_length=220)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, limit_choices_to='title')
-    street = models.ForeignKey(Street, on_delete=models.CASCADE, limit_choices_to='city__title')
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    street = models.ForeignKey(Street, on_delete=models.CASCADE)
     home_number = models.CharField(max_length=50)
     open_date = models.TimeField()
-    closed_date = models.TimeField()
+    closed_date = models.TimeField()  # timeformat="%H:%M")
+    open = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
